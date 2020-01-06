@@ -1,0 +1,18 @@
+<h1>Recipes</h1>
+<br>
+<br>
+<%= render "search", recipe: @recipe %><br>
+
+<% if @recipes.length > 0 %>
+    <% @recipes.each do |recipe| %>
+        <%= image_tag recipe.image, size:"300x300"%>    <br>   
+        <h2><%= link_to recipe.title, recipe_path(recipe.id) %></h2>
+        <%= recipe.description %><br>
+        <p> This recipe takes <%= recipe.total_time(recipe.id) %> mins</p><br>
+        <%= link_to "View Recipe", recipe_path(recipe.id), class: "boxed-btn3-text"%>
+        <br>
+        <br>                    
+    <% end%>
+<%else%>
+    <h4> Your search returned no matches</h4>
+<%end%>

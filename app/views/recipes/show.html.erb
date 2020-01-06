@@ -1,0 +1,58 @@
+<%= image_tag @recipe.image, size: "500x500" %> <br><br>
+<span>  Prep time: <%= @instructions.prep_time %>  minutes | Cook Time: <%= @instructions.cook_time %>  minutes </span> <br><br>
+<h1><%= @recipe.title %></h1> <br>
+<p><%= @recipe.description%><p><br>
+
+<h2>Ingredients</h2>
+<br>
+<ul>
+<% @recipe.recipe_ingredients.each do |recipe_ingredient| %>
+    <% if recipe_ingredient.size && recipe_ingredient.weight %>
+        <li>
+            <%= "#{recipe_ingredient.quantity} (#{recipe_ingredient.weight}g) #{recipe_ingredient.size} #{recipe_ingredient.ingredient.name}" %>
+        </li>
+    <% elsif recipe_ingredient.quantity > 1 && recipe_ingredient.weight %>
+        <li>
+            <%= "#{recipe_ingredient.quantity} x #{recipe_ingredient.weight}g  #{recipe_ingredient.ingredient.name}" %>
+        </li>
+    <% elsif recipe_ingredient.quantity == 1 && recipe_ingredient.weight  %>
+        <li>
+            <%= "#{recipe_ingredient.weight}g  #{recipe_ingredient.ingredient.name}" %>
+        </li>
+    <% else%>
+        <li>
+            <%= "#{recipe_ingredient.quantity}  #{recipe_ingredient.size} #{recipe_ingredient.ingredient.name}" %>
+        </li>
+    <%end%>
+<% end %>  
+<br>
+<li> Oil, for cooking</li>
+<li> Salt, to taste </li>  
+<li> Pepper, to taste </li>
+</ul>
+
+<br>
+    
+<h2>Instructions</h2>
+<br>
+<ol>
+<% @instructions.steps.each do |step| %>
+    <li>
+    <span>
+    <%= step %><br>
+    </span>
+    </li>
+    <br>
+<% end%>                        
+</ol>
+<%= @recipe.instructions.first.serving_suggestion %>
+
+<h2>Nutrition Facts</h2>
+<br>
+
+<ul>
+    <li>Calories: <%= @recipe.total_calories_per_serving(params[:id]) %> kcal</li>
+    <li>Carbohydrates: <%= @recipe.total_carbs_per_serving(params[:id]) %> g</li>
+    <li>Protein: <%= @recipe.total_protein_per_serving(params[:id]) %> g</li>
+    <li>Fat: <%= @recipe.total_fat_per_serving(params[:id]) %> g</li>
+</ul>
